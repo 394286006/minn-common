@@ -1,0 +1,27 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<!-- 
+    @author: minn 
+    @QQ:3942986006
+   -->
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>p.minn</groupId>
+		<artifactId>minn-parent</artifactId>
+		<version>0.0.1-parent</version>
+		<relativePath />
+	</parent>
+
+	<artifactId>minn-common</artifactId>
+	<version>0.0.1-common</version>
+	<packaging>jar</packaging>
+
+	<name>common</name>
+	<url>http://maven.apache.org</url>
+
+
+	<organization>
+		<name>minn</name>
+		<url>http://fmfl.iteye.com</url>
+	</organization>
+</project>
