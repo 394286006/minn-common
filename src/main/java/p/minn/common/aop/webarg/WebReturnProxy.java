@@ -12,7 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-import p.minn.common.utils.CommonUtils;
+import p.minn.common.utils.UtilCommon;
 import p.minn.common.exception.WebException;
 
 /**
@@ -41,7 +41,7 @@ public class WebReturnProxy implements MethodInterceptor {
 		}else{
 			if(entity instanceof WebException){
 				WebException e=(WebException)entity;
-				HttpHeaders rs=CommonUtils.ceateResponseHeader(e.getMessage(),e.getCauseMessage());
+				HttpHeaders rs=UtilCommon.ceateResponseHeader(e.getMessage(),e.getCauseMessage());
 				obj.put(SUCCESS_KEY, false);
 				obj.put(SUCCESS_DATA, e.getSelfdescript());
 				entity=new ResponseEntity<Object>(obj,rs,HttpStatus.OK);

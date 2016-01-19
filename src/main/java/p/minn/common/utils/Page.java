@@ -1,5 +1,8 @@
 package p.minn.common.utils;
 
+import java.util.List;
+import java.util.Map;
+
 
 /**
  * 分页工具
@@ -8,9 +11,9 @@ package p.minn.common.utils;
  */
 public class Page {
 
-	private Integer page;
+	private Integer page=0;
 	
-	private Integer rp;
+	private Integer rp=20;
 	
 	private Integer startR;
 	
@@ -21,6 +24,8 @@ public class Page {
 	private Integer total=-1;
 	
 	private String qtype;
+	
+	private List<Map<String,Object>> result;
 
 	public Integer getPage() {
 		return page;
@@ -39,9 +44,6 @@ public class Page {
 	}
 
 	public Integer getStartR() throws Exception {
-		if(this.total==-1){
-			throw new Exception("totoal param must be set!");
-		}
 		return startR;
 	}
 
@@ -95,5 +97,15 @@ public class Page {
 			this.endR=total;
 		}
 	}
+
+	public List<Map<String, Object>> getResult() {
+		return result;
+	}
+
+	public void setResult(List<Map<String, Object>> result) {
+		this.result = result;
+	}
+	
+	
 	
 }

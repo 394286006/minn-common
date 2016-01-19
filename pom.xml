@@ -8,12 +8,12 @@
 	<parent>
 		<groupId>p.minn</groupId>
 		<artifactId>minn-parent</artifactId>
-		<version>0.0.1-parent</version>
+		<version>0.0.1</version>
 		<relativePath />
 	</parent>
 
 	<artifactId>minn-common</artifactId>
-	<version>0.0.1-common</version>
+	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
 	<name>common</name>
