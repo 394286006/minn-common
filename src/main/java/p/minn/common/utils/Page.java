@@ -25,7 +25,7 @@ public class Page {
 	
 	private String qtype;
 	
-	private List<Map<String,Object>> result;
+	private List result;
 
 	public Integer getPage() {
 		return page;
@@ -98,11 +98,11 @@ public class Page {
 		}
 	}
 
-	public List<Map<String, Object>> getResult() {
+	public List getResult() {
 		return result;
 	}
 
-	public void setResult(List<Map<String, Object>> result) {
+	public void setResult(List result) {
 		this.result = result;
 	}
 	
