@@ -13,6 +13,7 @@ import p.minn.common.utils.Encodes;
  */
 public class MyKeyGenerator implements KeyGenerator {
   StringBuilder key = new StringBuilder();
+  private int keyLength=80;
   @Override
   public Object generate(Object target, Method method, Object... params) {
     // TODO Auto-generated method stub
@@ -22,7 +23,18 @@ public class MyKeyGenerator implements KeyGenerator {
     }
     key.append(method.getName());
     key.append(target.getClass().getSimpleName());
-    return Encodes.encodeHex(key.toString().getBytes()).substring(0,80);
+    String tmpkey=Encodes.encodeHex(key.toString().getBytes());
+    return tmpkey.length()>keyLength? tmpkey.substring(0,keyLength):tmpkey;
+  }
+  
+  
+  public int getKeyLength() {
+    return keyLength;
+  }
+  public void setKeyLength(int keyLength) {
+    this.keyLength = keyLength;
   }
 
+  
+  
 }
