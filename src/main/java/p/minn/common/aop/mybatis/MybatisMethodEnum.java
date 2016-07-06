@@ -6,6 +6,6 @@ package p.minn.common.aop.mybatis;
  * @QQ:3942986006
  *
  */
-public enum MemCachedMethodEnum {
+public enum MybatisMethodEnum {
      query,add,remove,update
 }

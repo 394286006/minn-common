@@ -1,10 +1,8 @@
-package p.minn.redis.mybatis;
+package p.minn.common.utils;
 
 import java.lang.reflect.Method;
 
 import org.springframework.cache.interceptor.KeyGenerator;
-
-import p.minn.common.utils.Encodes;
 /**
  * 
  * @author minn

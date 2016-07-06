@@ -1,4 +1,4 @@
-package p.minn.common.aop.mybatis;
+package p.minn.common.aop.memcached;
 
 
 
@@ -12,6 +12,7 @@ import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.stereotype.Component;
 
 import p.minn.common.annotation.MemCachedAnnotation;
+import p.minn.common.aop.mybatis.MybatisMethodEnum;
 
 
 /**
@@ -39,17 +40,18 @@ public class MemCachedProxy implements MethodInterceptor {
       key=(String) myKeyGenerator.generate(mi.getMethod().getDeclaringClass(), mi.getMethod(), mi.getArguments()) ;
     }
     Object entity=null;
-   if(mca.method().equals(MemCachedMethodEnum.query)||mca.method().equals(MemCachedMethodEnum.add)){
+   if(mca.method().equals(MybatisMethodEnum.query)||mca.method().equals(MybatisMethodEnum.add)){
      entity=memcachedClient.get(key);
      if(entity==null){
        entity=mi.proceed();
        memcachedClient.add(key, mca.exp(), entity);
      }
    }
-   if(mca.method().equals(MemCachedMethodEnum.remove)){
+   if(mca.method().equals(MybatisMethodEnum.remove)){
      memcachedClient.delete(key);
+     entity=mi.proceed();
    }
-   if(mca.method().equals(MemCachedMethodEnum.update)){
+   if(mca.method().equals(MybatisMethodEnum.update)){
      entity=mi.proceed();
      memcachedClient.set(key, mca.exp(),entity);
    }

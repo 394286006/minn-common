@@ -14,36 +14,23 @@
 	http://www.springframework.org/schema/cache
     http://www.springframework.org/schema/cache/spring-cache.xsd">
     <!-- author:minn QQ:394286006 -->
-	<context:component-scan base-package="p.minn.common.aop.mybatis" />
+	<context:component-scan base-package="p.minn.common.aop.mongo" />
 	<context:property-placeholder
-		location="classpath:/spring/memcached/application.memcached.properties" />
+		location="classpath:/spring/mongo/application.mongo.properties" />
 	<bean id="myKeyGenerator" class="p.minn.common.utils.MyKeyGenerator" />
+	<bean id="mongoClientURI" class="com.mongodb.MongoClientURI">
+	      <constructor-arg index="0" value="${mongo.servers}"></constructor-arg>
+	</bean>
 
-	<bean id="memcachedClient" class="net.spy.memcached.spring.MemcachedClientFactoryBean">
-		<property name="servers" value="${memcached.servers}" />
-		<property name="protocol" value="${memcached.protocol}" />
-		<property name="transcoder">
-			<bean class="net.spy.memcached.transcoders.SerializingTranscoder">
-				<property name="compressionThreshold" value="${memcached.compressionThreshold}" />
-			</bean>
-		</property>
-		<property name="opTimeout" value="${memcached.opTimeout}" />
-		<property name="timeoutExceptionThreshold" value="${memcached.timeoutExceptionThreshold}" />
-		<property name="hashAlg">
-			<value type="net.spy.memcached.DefaultHashAlgorithm">
-				${memcached.hashAlg}
-			</value>
-		</property>
-		<property name="locatorType" value="${memcached.locatorType}" />
-		<property name="failureMode" value="${memcached.failureMode}" />
-		<property name="useNagleAlgorithm" value="${memcached.useNagleAlgorithm}" />
+	<bean id="mongoClient" class="com.mongodb.MongoClient">
+	 <constructor-arg index="0" ref="mongoClientURI"></constructor-arg>
 	</bean>
 
 	<aop:config proxy-target-class="false">
 		<aop:pointcut
 			expression="execution(public 
 		* p.minn.privilege.repository.*.*(..))"
-			id="memcachedcache" />
-		<aop:advisor advice-ref="memCachedProxy" pointcut-ref="memcachedcache" />
+			id="mongodb" />
+		<aop:advisor advice-ref="myMongoProxy" pointcut-ref="mongodb" />
 	</aop:config>
 </beans>

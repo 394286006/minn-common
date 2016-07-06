@@ -15,8 +15,9 @@ import p.minn.common.aop.mybatis.MybatisMethodEnum;
  */
 @Target({ElementType.METHOD,ElementType.FIELD,ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface MemCachedAnnotation {
+public @interface MongoAnnotation {
   String key() default "";
-  int exp() default 5000;
   MybatisMethodEnum method() default MybatisMethodEnum.query;
+  String database() default "minn";
+  String collection() default "collection";
 }

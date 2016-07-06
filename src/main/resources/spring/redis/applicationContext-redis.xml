@@ -33,7 +33,7 @@
 		class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer" />
 	<bean id="keySerializer"
 		class="org.springframework.data.redis.serializer.StringRedisSerializer" />
-	<bean id="myKeyGenerator" class="p.minn.redis.mybatis.MyKeyGenerator" />
+	<bean id="myKeyGenerator" class="p.minn.common.utils.MyKeyGenerator" />
 	<bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
 		<property name="connectionFactory" ref="jedisConnectionFactory" />
 		<property name="keySerializer" ref="keySerializer" />
