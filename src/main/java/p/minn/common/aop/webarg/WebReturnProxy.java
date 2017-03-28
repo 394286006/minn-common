@@ -20,6 +20,12 @@ import p.minn.common.exception.WebException;
  * @author minn
  * @QQ:3942986006
  * @comment 返回数据格式的重新封装，对于String类型，不作处理，对于非String类型，包含两个关键字，success【true/false】,data[返回自定义的封装数据]
+ * HttpHeaders hthed=new HttpHeaders();
+ *          hthed.add("Access-Control-Allow-Origin", "*");
+ *          hthed.add("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
+ *          hthed.add("Access-Control-Allow-Headers", "X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept");
+ *          hthed.add("Access-Control-Max-Age", "1728000");
+ *
  */
 @Component
 public class WebReturnProxy implements MethodInterceptor {

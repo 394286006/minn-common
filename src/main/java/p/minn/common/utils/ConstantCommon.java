@@ -12,4 +12,9 @@ public class ConstantCommon {
 	
 	public static final String  ANONYMOUSUSER="anonymousUser";
 	
+	//data/status exists
+	public static final String ERROR_CODE_10000="ERROR_CODE_100000";
+	//data not exists
+	public static final String ERROR_CODE_10001="ERROR_CODE_100001";
+	
 }

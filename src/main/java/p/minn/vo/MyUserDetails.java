@@ -22,12 +22,20 @@ public abstract class MyUserDetails {
 	
 	private String language;
 
+	public MyUserDetails(String loginName,
+        String password) {
+    super();
+    this.loginName = loginName;
+    this.password = password;
+}
+	
 	public MyUserDetails(Integer id, String loginName,
-			String password,Integer type, List<String> roles) {
+			String password,String language,Integer type, List<String> roles) {
 		super();
 		this.id = id;
 		this.roles = roles;
 		this.type=type;
+		this.language=language;
 		this.loginName = loginName;
 		this.password = password;
 	}
