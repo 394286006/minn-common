@@ -2,11 +2,17 @@ package p.minn.common.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
+
+
 
 
 
@@ -125,7 +131,7 @@ public class UtilCommon {
 		String hexs=null;
 		try{
 		 String newpwd=pwd.substring(0,pwd.length()/3);
-		  byte[] salt=pwd.substring(pwd.length()-8, pwd.length()).getBytes();
+		  byte[] salt=pwd.substring(pwd.length()-8>0? pwd.length()-8:0, pwd.length()).getBytes();
 		  MessageDigest digest = MessageDigest.getInstance("MD5");
           if (salt != null) {
               digest.update(salt);
@@ -149,6 +155,57 @@ public class UtilCommon {
 		return String.valueOf((int)Math.random()*100);
 	}
 	
+    public static List<Map<String,Object>> createTreeMenu(List<Map<String,Object>> source,String parent){
+      List<Map<String,Object>> children=new ArrayList<Map<String,Object>>();
+      for(Map<String,Object> map:source){
+          if(map.get("pid").toString().equals(parent)){
+              Map<String,Object> state=new HashMap<String,Object>();
+              if(map.get("selected").toString().equals("1")){
+                  map.put("selected", true);
+                  state.put("selected", true);
+              }else{
+                  map.put("selected", false);
+                  state.put("selected", false);
+              }
+              map.put("state", state);
+              children.add(map);
+              map.put("children", createTreeMenu(source,map.get("id").toString()));
+             
+          }
+      }
+      return children;
+  }	
+    
+   public static String[] split(String src,int len){
+      return split(src,len,"-1");
+   }
+   public static String[] split(String src,int len,String val){
+     String[] arr=null;
+     if(StringUtils.isEmpty(src)){
+       arr=new String[len];
+       for(int i=0;i<len;i++){
+         arr[i]=val;
+       }
+     }else{
+       arr=src.split(",");
+     }
+     
+     return arr;
+  }
+   public static String currentDateTime() {
+     Date date=new Date();
+     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    return sdf.format(date);
+ }
+   
+   public static String getString(Object obj){
+     if(obj==null){
+       return "";
+     }else{
+       return obj.toString();
+     }
+   }
+     
 	public static void main(String[] args){
 		//
 		System.out.println(getPwd("89bed836cd5a7f00b8d6aed6dd80a248bf035cce4a7a9f68f2b0d39e"));
