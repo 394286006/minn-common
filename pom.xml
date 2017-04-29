@@ -6,7 +6,7 @@
 		<groupId>p.minn</groupId>
 		<artifactId>minn-parent</artifactId>
 		<version>0.0.1</version>
-		<relativePath />
+		<relativePath>../minn-parent</relativePath>
 	</parent>
 
 	<artifactId>minn-common</artifactId>
