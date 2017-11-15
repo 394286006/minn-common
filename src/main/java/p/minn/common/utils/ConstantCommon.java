@@ -17,4 +17,8 @@ public class ConstantCommon {
 	//data not exists
 	public static final String ERROR_CODE_10001="ERROR_CODE_100001";
 	
+	public static final int HTTP_CLIENT_XML=0;
+	
+	public static final int HTTP_CLIENT_JSON=1;
+	
 }
