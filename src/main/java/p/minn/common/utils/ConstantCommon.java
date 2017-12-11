@@ -21,4 +21,6 @@ public class ConstantCommon {
 	
 	public static final int HTTP_CLIENT_JSON=1;
 	
+	public static final String DEFAULT_ICON="assets/sysmenu.png";
+	
 }
