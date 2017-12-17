@@ -158,6 +158,9 @@ public class UtilCommon {
     public static List<Map<String,Object>> createTreeMenu(List<Map<String,Object>> source,String parent){
       List<Map<String,Object>> children=new ArrayList<Map<String,Object>>();
       for(Map<String,Object> map:source){
+    	      if(map.containsKey("code")) {
+    	    	    map.put("key", map.get("id")+"@"+map.get("code")+"@");
+    	      }
           if(map.get("pid").toString().equals(parent)){
               Map<String,Object> state=new HashMap<String,Object>();
               if(map.get("selected").toString().equals("1")){
