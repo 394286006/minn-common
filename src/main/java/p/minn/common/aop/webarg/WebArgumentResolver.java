@@ -61,7 +61,7 @@ public class WebArgumentResolver implements HandlerMethodArgumentResolver {
 			Class<?> target) {
 		Class<?> klass = parameter.getParameterType();
 		if (klass.isAssignableFrom(ptype)) {
-			Annotation[] as = parameter.getParameterAnnotations();
+			Annotation[] as = (Annotation[]) parameter.getParameterAnnotations();
 			for (Annotation a : as) {
 				if (a.annotationType() == target) {
 					return true;
