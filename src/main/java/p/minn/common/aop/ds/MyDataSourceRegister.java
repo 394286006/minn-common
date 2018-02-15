@@ -53,21 +53,12 @@ public class MyDataSourceRegister implements EnvironmentAware {
 			}
 			return ds;
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new RuntimeException("init DataSource Excepton:" + e.getMessage());
 		}
 	}
 
-	private String getStringValue(Map<String, Object> map, String key) {
-		return map.get(key).toString();
-	}
-
-	private Integer getIntValue(Map<String, Object> map, String key) {
-		return Integer.valueOf(map.get(key).toString());
-	}
-
-	private void methodInvoke(Object p, Map<String, Object> property) {
-		Method[] methods = p.getClass().getDeclaredMethods();
+	private void methodInvoke(Object target, Map<String, Object> property) throws Exception {
+		Method[] methods = target.getClass().getDeclaredMethods();
 		for (Method method : methods) {
 			String name = method.getName();
 			if (name.indexOf("set") != 0) {
@@ -80,56 +71,42 @@ public class MyDataSourceRegister implements EnvironmentAware {
 					continue;
 				}
 				if (types[0].getTypeName().equals("java.lang.String")) {
-					try {
-						Method m = p.getClass().getMethod(name, String.class);
-						m.invoke(p, this.getStringValue(property, field));
-					} catch (Exception e) {
-					}
+					Method m = target.getClass().getMethod(name, String.class);
+					m.invoke(target, property.get(field).toString());
 				}
 				if (types[0].getTypeName().equals("java.lang.Integer") || types[0].getTypeName().equals("int")) {
-					try {
-						Method m = p.getClass().getMethod(name, Integer.class);
-						m.invoke(p, this.getIntValue(property, field));
-					} catch (Exception e) {
-					}
+					Method m = target.getClass().getMethod(name, Integer.class);
+					m.invoke(target, Integer.valueOf(property.get(field).toString()));
 				}
 				if (types[0].getTypeName().equals("java.lang.Boolean") || types[0].getTypeName().equals("boolean")) {
-					try {
-						Method m = p.getClass().getMethod(name, Boolean.class);
-						m.invoke(p, this.getBooleanValue(property, field));
-					} catch (Exception e) {
-					}
+					Method m = target.getClass().getMethod(name, Boolean.class);
+					m.invoke(target, Boolean.valueOf(property.get(field).toString()));
 				}
 			}
-
 		}
 	}
 
-	private void propertyInvoke(Object p, Map<String, Object> property) throws Exception {
-		Field[] fields = p.getClass().getDeclaredFields();
+	private void propertyInvoke(Object target, Map<String, Object> property) throws Exception {
+		Field[] fields = target.getClass().getDeclaredFields();
 		for (int j = 0; j < fields.length; j++) {
-			String fleld = fields[j].getName();
-			if (!StringUtils.isEmpty(property.get(fleld))) {
-				String name = fleld.substring(0, 1).toUpperCase() + fleld.substring(1);
+			String field = fields[j].getName();
+			if (!StringUtils.isEmpty(property.get(field))) {
+				String name = field.substring(0, 1).toUpperCase() + field.substring(1);
 				String type = fields[j].getGenericType().toString();
 				if (type.equals("class java.lang.String")) {
-					Method m = p.getClass().getMethod("set" + name, String.class);
-					m.invoke(p, this.getStringValue(property, fleld));
+					Method m = target.getClass().getMethod("set" + name, String.class);
+					m.invoke(target, property.get(field).toString());
 				}
 				if (type.equals("class java.lang.Integer")) {
-					Method m = p.getClass().getMethod("set" + name, Integer.class);
-					m.invoke(p, this.getIntValue(property, fleld));
+					Method m = target.getClass().getMethod("set" + name, Integer.class);
+					m.invoke(target, Integer.valueOf(property.get(field).toString()));
 				}
 				if (type.equals("class java.lang.Boolean")) {
-					Method m = p.getClass().getMethod("set" + name, Boolean.class);
-					m.invoke(p, this.getBooleanValue(property, fleld));
+					Method m = target.getClass().getMethod("set" + name, Boolean.class);
+					m.invoke(target, Boolean.valueOf(property.get(field).toString()));
 				}
 			}
 		}
-	}
-
-	private boolean getBooleanValue(Map<String, Object> map, String key) {
-		return Boolean.valueOf(map.get(key).toString());
 	}
 
 	@Override
