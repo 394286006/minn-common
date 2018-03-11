@@ -7,9 +7,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.stereotype.Component;
 
 import p.minn.common.annotation.MyDataSource;
 
@@ -23,9 +20,9 @@ import p.minn.common.annotation.MyDataSource;
 public abstract class MyDataSourceInterceptor<T> {
 
 	@Autowired
-	protected MySpringDataSourceRegister mr;
+	private MyDataSourceRegister<T> mr;
 	
-	protected Map<String,T> ds=new HashMap<String,T>();
+	private Map<String,T> ds=new HashMap<String,T>();
 
 	@Around("execution(public * *..service..*.*(..))&&@annotation(param)")
 	public Object getDataSource(ProceedingJoinPoint point, MyDataSource param) throws Throwable {
@@ -41,5 +38,16 @@ public abstract class MyDataSourceInterceptor<T> {
 	}
 	
 	protected abstract T[] get(String[] params);
+	
+	protected void invokeGet(String[] params,T[] list) {
+		for (int i = 0; i < params.length; i++) {
+			if(ds.containsKey(params[i])) {
+				list[i]=ds.get(params[i]);
+			}else {
+				ds.put(params[i], mr.get(params[i]));
+				list[i] = ds.get(params[i]);
+			}
+		}
+	}
 
 }
