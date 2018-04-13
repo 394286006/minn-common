@@ -14,14 +14,13 @@ public class DigestTest {
 		//String salt =  Encodes.encodeHex(salts);
 		// 将spring数组转化为8位byte数组
 		//salts = Encodes.decodeHex(salt);
-		salts="ta5".getBytes();
+		salts="123456".getBytes();
 		// 原密码
 		String password = "123456";
 		// 对密码加盐进行1024次SHA1加密
 		byte[] hashPassword = Digests.sha1(password.getBytes(), salts, 1024);
 		// 将加密后的密码数组转换成字符串
 		password = Encodes.encodeHex(hashPassword);
-		 
 		  
 	}
 }
