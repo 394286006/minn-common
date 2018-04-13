@@ -6,8 +6,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.springframework.stereotype.Component;
-
 /**
  * 
  * @author minn
@@ -17,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Documented
 @Target({ElementType.METHOD})  
 @Retention(RetentionPolicy.RUNTIME)
-@Component
 public @interface MyDataSource {
+	Class type();
 	String value() ;
 }

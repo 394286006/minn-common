@@ -23,16 +23,16 @@ import org.apache.tomcat.jdbc.pool.PoolProperties;
  * @QQ:3942986006
  *
  */
-public class MyDataSourceRegister implements EnvironmentAware {
+public abstract class MyDataSourceRegister<T> implements EnvironmentAware {
 
 	private static final Object DEFAULT_DATASOURCE_TYPE = "org.apache.tomcat.jdbc.pool.DataSource";
 
-	private Map<String, DataSource> dataSources = new HashMap<String, DataSource>();
+	private Map<String, T> dataSources = new HashMap<String, T>();
 
-	private DataSource initDataSource(Map<String, Object> property) {
+	private T initDataSource(Map<String, Object> property) {
 		try {
 			Object sourceType = property.get("type");
-			DataSource ds = null;
+			T ds = null;
 			Class<? extends DataSource> dataSourceType = null;
 			if (sourceType == null) {
 				sourceType = DEFAULT_DATASOURCE_TYPE;
@@ -44,12 +44,12 @@ public class MyDataSourceRegister implements EnvironmentAware {
 				PoolProperties p = new PoolProperties();
 				this.propertyInvoke(p, property);
 				dps.setPoolProperties(p);
-				ds = dps;
+				ds = init(dps);
 			}
 			if (sourceType.toString().equals("com.mchange.v2.c3p0.ComboPooledDataSource")) {
 				ComboPooledDataSource pool = new ComboPooledDataSource();
 				this.methodInvoke(pool, property);
-				ds = pool;
+				ds = init(pool);
 			}
 			return ds;
 		} catch (Exception e) {
@@ -115,13 +115,14 @@ public class MyDataSourceRegister implements EnvironmentAware {
 		String names = propertyResolver.getProperty("names");
 		for (String name : names.split(",")) {
 			Map<String, Object> property = propertyResolver.getSubProperties(name + ".");
-			DataSource ds = initDataSource(property);
+			T ds = initDataSource(property);
 			dataSources.put(name, ds);
 		}
 	}
 
-	public DataSource getDataSource(String key) {
+	public T get(String key) {
 		return dataSources.get(key);
 	}
 
+	protected abstract T init(DataSource ds);
 }
