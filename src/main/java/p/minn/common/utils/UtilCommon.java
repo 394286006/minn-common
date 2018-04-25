@@ -197,10 +197,10 @@ public class UtilCommon {
        return obj.toString();
      }
    }
-     
+     /*
 	public static void main(String[] args){
 		//
 		System.out.println(getPwd("89bed836cd5a7f00b8d6aed6dd80a248bf035cce4a7a9f68f2b0d39e"));
 	}
-	
+*/	
 }

@@ -6,7 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import org.apache.commons.codec.binary.Hex;
 
 public class DigestTest {
-
+/*
 	public static void main(String args[]) throws NoSuchAlgorithmException{
 		// 得到8位盐
 		byte[] salts = Digests.generateSalt(8);
@@ -23,4 +23,5 @@ public class DigestTest {
 		password = Encodes.encodeHex(hashPassword);
 		  
 	}
+	*/
 }

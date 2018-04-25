@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="p.minn.common.repository.GlobalizationDao">
+
+  <select id="query" resultType="java.util.HashMap">
+		select g.id,g.name,g.language,g.tablecolumn,date_format(g.createtime,'%Y-%m-%d %H:%i:%s') as createtime,(select max(name) from account where id=g.createid) as createname
+		,date_format(g.updatetime,'%Y-%m-%d %H:%i:%s') as updatetime,(select max(name) from account where id=g.updateid) as updatename from globalization g 
+		<where>
+		   <if test="condition.tablename!='unknown'">
+		  		g.tablename=#{condition.tablename}
+		</if>
+		<if test="condition.did!='unknown'">
+		  		and g.tableid=#{condition.did}
+		</if>
+		</where>
+       order by tablecolumn 
+	</select>
+  
+  <update id="update" parameterType="Globalization">
+		UPDATE globalization SET
+		name = #{name},
+		updateid=${updateid},
+		updatetime=sysdate()
+		WHERE id = ${id}
+	</update>
+	  <update id="updateByTable" parameterType="Globalization">
+		UPDATE globalization SET
+		name = #{name},
+		updateid=${updateid},
+		updatetime=sysdate()
+		WHERE  tablename=#{tablename} and tablecolumn=#{tablecolumn} and language=#{language}
+	</update>
+
+	<delete id="delete">
+		delete from globalization where id=${id}
+	</delete>
+	
+	<delete id="deleteByTableId">
+		delete from globalization where tableid=#{tableid} and tablename=#{tablename}
+	</delete>
+  
+  <insert id="save" parameterType="Globalization" useGeneratedKeys="true"
+		keyProperty="id">
+		INSERT INTO globalization (name, language,
+		tableid,tablename ,createid,createtime,updateid,updatetime,tablecolumn)
+		VALUES ( #{name}, #{language},
+		#{tableid},#{tablename},#{createid},sysdate(),#{createid},sysdate(),#{tablecolumn})
+	</insert>
+  
+</mapper>

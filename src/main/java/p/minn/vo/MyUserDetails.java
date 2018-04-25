@@ -1,5 +1,6 @@
 package p.minn.vo;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
  * @QQ:3942986006
  *
  */
-public abstract class MyUserDetails {
+public abstract class MyUserDetails implements Serializable{
 
 	private Integer id;
 	
